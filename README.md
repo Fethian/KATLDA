@@ -1,6 +1,11 @@
 # KATLDA
 Kolmogorov–Arnold Networks lncRNA Disease Association
 
-SineKAN： 使用正弦激活函数的 Kolmogorov-Arnold 网络
-https://arxiv.org/html/2407.04149?_immersive_translate_auto_translate=1
-GitHub仓库：https://github.com/ereinha/SineKAN
+# SineKAN
+
+使用正弦激活函数的 Kolmogorov-Arnold 网络
+
+## 相关链接
+
+- 论文地址：[arXiv:2407.04149](https://arxiv.org/html/2407.04149?_immersive_translate_auto_translate=1)
+- 原始仓库：[ereinha/SineKAN](https://github.com/ereinha/SineKAN)
