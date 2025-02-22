@@ -87,46 +87,95 @@
 
 - **常见的激活函数**
 - ReLU(Rectified Linear Unit,修正线性单元)
-  f(x) = max(0, x)
-  优点：简单计算，不会出现梯度消失问题
-  缺点：可能会出现“神经元死亡”(ReLU输出0，不再更新）
-    '''import numpy as np
-       def relu(x):
-           return np.maximum(0, x)
-       print(relu(-2))
-       print(relu(3))'''
+  - ![ReLU](https://latex.codecogs.com/svg.image?&space;f(x)=\max(0,x))
+  - 优点：简单计算，不会出现梯度消失问题
+  - 缺点：可能会出现“神经元死亡”(ReLU输出0，不再更新）
+  - ```python
+    import numpy as np
+    def relu(x):
+        return np.maximum(0, x)
+    print(relu(-2))
+    print(relu(3))
+    ```
 - Sigmoid(S型激活函数)
-  f(x) = 1 / (1 + e**(-x))
-  优点：能将输出压缩到（0，1），适用于二分类问题
-  缺点：容易出现梯度消失问题
-  ‘’‘import numpy as np
-     def sigmoid(x):
-         return 1 / (1 + np.exp(-x))
-     print(sigmoid(-2))
-     print(sigmoid(3))’‘’
+  - ![Sigmoid](https://latex.codecogs.com/svg.image?f(x)=\frac{1}{1&plus;e^{-x}})
+  - 优点：能将输出压缩到（0，1），适用于二分类问题
+  - 缺点：容易出现梯度消失问题
+  - ```python
+    import numpy as np
+    def sigmoid(x):
+        return 1 / (1 + np.exp(-x))
+    print(sigmoid(-2))
+    print(sigmoid(3))
+    ```
 - Tanh(双曲正切)
-  f(x) = (etox - eto(-x))/(eto(x) + eto(-x))
-  特点：输出范围（-1，1），比Sigmoid好，仍有可能梯度消失问题
-  '''import numpy as np
-     def tanh(x):
-         return np.tanh(x)
-     print(tanh(-2))
-     print(tanh(3))‘’‘
+  - ![Tanh](https://latex.codecogs.com/svg.image?f(x)=\frac{e^{x}-e^{-x}}{e^{x}&plus;e^{-x}})
+  - 特点：输出范围（-1，1），比Sigmoid好，仍有可能梯度消失问题
+  - ```python
+    import numpy as np
+    def tanh(x):
+        return np.tanh(x)
+    print(tanh(-2))
+    print(tanh(3))
+    ```
 - Softmax(用于分类问题)
-  f(xi) = e to xi / Sum(e to xj)
-  适用于多分类问题
-  把所有输出变成概率，总和为1
-  ‘’‘import numpy as np
-     def softmax(x):
-         exp_x = np.exp(x - np.max(x))  # 防止数值溢出
-         return exp_x / np.sum(exp_x)
-     print(softmax([2.0, 1.0, 0.1]))'''
-  
-### 损失函数
+  - ![Softmax](https://latex.codecogs.com/svg.image?f(x_{i})=\frac{e^{x_{i}}}{\sum&space;e^{x_{j}}})
+  - 适用于多分类问题
+  - 把所有输出变成概率，总和为1
+  - ```python
+    import numpy as np
+    def softmax(x):
+        exp_x = np.exp(x - np.max(x))  # 防止数值溢出
+        return exp_x / np.sum(exp_x)
+    print(softmax([2.0, 1.0, 0.1]))
+    ```
+
+### 损失函数(Loss Function)
+损失函数用于**衡量模型的预测结果与真实值的差距**，训练模型的目标是最小化损失。
+#### 常见损失函数
+- 均方误差(MSE, Mean Squared Error)(用于回归)
+  - ![MSE](https://latex.codecogs.com/svg.image?L=\frac{1}{N}\sum(y_{true}-y_{pred})^{2})
+- 交叉熵损失(Cross-Entropy Loss)(用于分类)
+  - ![Cross-Entropy Loss](https://latex.codecogs.com/svg.image?L=-\sum&space;y_{true}\log(y_{pred}))
+
 ### 优化算法
+优化算法用于**调整神经网络的权重**，使损失函数最小化。
+#### 梯度下降(Gradient Descent)
+- 计算损失函数对权重的偏导数，沿着梯度的负方向更新权重。
+- ![Gradient Descent](https://latex.codecogs.com/svg.image?W=W-\alpha\frac{\partial&space;L}{\partial&space;W})
+- ![](https://latex.codecogs.com/svg.image?\alpha&space;)是学习率
+- ![](https://latex.codecogs.com/svg.image?\frac{\partial&space;L}{\partial&space;W})是损失函数对权重的导数
+    - 随机梯度下降(SGD)
+      - 每次更新仅使用一个样本，计算快但噪声较大
+    - 动量梯度下降(Momentum)
+      - 通过添加动量项，加速收敛
+    - Adam (Adaptive Moment Estimation)
+      - 结合动量和自适应学习率，是最常用的优化算法
+```python
+alpha = 0.01  # 学习率
+gradient = np.array([0.5, -0.3, 0.1])  # 假设的梯度
+W = np.random.randn(3)
+
+W = W - alpha * gradient  # 更新权重
+print("更新后的权重", W)
+```
+
 ### 模型训练流程
-
-
+    1. 数据准备
+      - 加载数据
+      - 数据预处理
+    2. 模型初始化
+      - 初始化权重和偏置
+    3. 向前传播
+      - 计算每一层的激活值
+    4. 计算损失
+      - 计算当前预测结果与真实值的误差
+    5. 反向传播
+      - 计算梯度，并调整权重
+    6. 优化
+      - 使用优化算法更新权重
+    7. 迭代训练
+      - 重复上述步骤直到损失收敛
 
 
 
