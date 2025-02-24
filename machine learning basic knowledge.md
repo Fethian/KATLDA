@@ -1,10 +1,27 @@
 # 机器学习基础知识
 【机器学习】：任务T  性能度量方案P/ 计算机程序：自主学习任务T的经验E
 
-
-## 机器学习类型
+## 机器学习算法
+| 类型 | 传统算法(Traditional Algorithm) | 学习算法(Learning Algorithm) |
+|-------|-------------------------------|------------------------------|
+| **原理** | 人工定义规则，按步骤执行 | 从数据中学习模式和规律 |
+| **数据依赖** | 固定逻辑，不依赖数据 | 需要大量数据来学习 |
+| **示例** |排序算法(Bubble Sort)、搜索算法(Binary Search)| 线性回归(Linear Regression)、神经网络(Neurak Netwoork) |
+| **使用场景** | 规则明确的任务，如计算税费、排序 | 复杂问题，如语音识别、图像分类 |
+## 机器学习算法类型
 ### 监督学习 (Supervised Learning, SL)
 使用标记输入输出已知的样本数据。主要解决两类问题：回归(regression)和分类(classification)
+x --> y(y given)
+- regression
+  - predict a number from infinitely many possible outputs
+    - {housing price prediction, x = house size(ft2), y = price($),
+    - 从散点图里画regression curves}
+- classification
+  - only n possible output (n = # of categories)
+    - {肿瘤诊断：x = tumor size(cm), y = diagnosis(0/1), 分类，良性O，恶性X（可以有multiple output，如恶性1类 X， 恶性2类 V, 即multiple categories,如（猫/狗））
+    - more input to predict output
+      - i = tumor size, j = age, 分类：良性O，恶性X
+      - the learning algorithm has to decide how to fit a boundary line.
 #### 常用算法
     - 邻近算法 (K-Nearest Neighbors, KNN)
     - 线性回归 (Linear Regression)
