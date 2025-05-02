@@ -5,6 +5,7 @@ from torch_geometric.nn import GCNConv
 from torch_geometric.nn import VGAE
 import numpy as np
 from utils import *
+from kan import KAN
 
 device = torch.device("cpu")
 
@@ -143,38 +144,38 @@ class GraphTransformerLayer(nn.Module):
         return attn_out
 
 
-class MLP(nn.Module):
-    def __init__(self, embedding_size, drop_rate):
-        super(MLP, self).__init__()
-        self.embedding_size = embedding_size
-        self.drop_rate = drop_rate
+# class MLP(nn.Module):
+#     def __init__(self, embedding_size, drop_rate):
+#         super(MLP, self).__init__()
+#         self.embedding_size = embedding_size
+#         self.drop_rate = drop_rate
 
-        def init_weights(m):
-            if type(m) == nn.Linear:
-                nn.init.xavier_uniform_(m.weight)
-                if m.bias is not None:
-                    nn.init.constant_(m.bias, 0)
-            elif type(m) == nn.Conv2d:
-                nn.init.uniform_(m.weight)
+#         def init_weights(m):
+#             if type(m) == nn.Linear:
+#                 nn.init.xavier_uniform_(m.weight)
+#                 if m.bias is not None:
+#                     nn.init.constant_(m.bias, 0)
+#             elif type(m) == nn.Conv2d:
+#                 nn.init.uniform_(m.weight)
 
-        self.mlp_prediction = nn.Sequential(
-            nn.Linear(self.embedding_size, self.embedding_size // 2),
-            nn.LeakyReLU(),
-            nn.Dropout(self.drop_rate),
-            nn.Linear(self.embedding_size // 2, self.embedding_size // 4),
-            nn.LeakyReLU(),
-            nn.Dropout(self.drop_rate),
-            nn.Linear(self.embedding_size // 4, self.embedding_size // 6),
-            nn.LeakyReLU(),
-            nn.Dropout(self.drop_rate),
-            nn.Linear(self.embedding_size // 6, 1, bias=False),
-            nn.Sigmoid()
-        )
-        self.mlp_prediction.apply(init_weights)
+#         self.mlp_prediction = nn.Sequential(
+#             nn.Linear(self.embedding_size, self.embedding_size // 2),
+#             nn.LeakyReLU(),
+#             nn.Dropout(self.drop_rate),
+#             nn.Linear(self.embedding_size // 2, self.embedding_size // 4),
+#             nn.LeakyReLU(),
+#             nn.Dropout(self.drop_rate),
+#             nn.Linear(self.embedding_size // 4, self.embedding_size // 6),
+#             nn.LeakyReLU(),
+#             nn.Dropout(self.drop_rate),
+#             nn.Linear(self.embedding_size // 6, 1, bias=False),
+#             nn.Sigmoid()
+#         )
+#         self.mlp_prediction.apply(init_weights)
 
-    def forward(self, rd_features_embedding):
-        predict_result = self.mlp_prediction(rd_features_embedding)
-        return predict_result
+#     def forward(self, rd_features_embedding):
+#         predict_result = self.mlp_prediction(rd_features_embedding)
+#         return predict_result
 
 
 class GTM_net(nn.Module):
